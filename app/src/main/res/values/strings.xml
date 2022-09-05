@@ -16,4 +16,5 @@
     <string name="done_successfully">تم إضافة سعر الطلب\n بنجاح</string>
     <string name="price">السعر</string>
     <string name="please_insert_mount">من فضلك ادخل المبلغ المطلوب</string>
+    <string name="this_device_isn_not_supported">هذا الجهاز لا يدعم ال NFC او انه مغلق</string>
 </resources>

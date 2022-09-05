@@ -1,6 +1,7 @@
 package com.apptikar.easy.peresentation.ui.writeOnTag
 
 import android.nfc.Tag
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -47,7 +48,7 @@ fun InsertTheMount(
    val mount =  writeOnTagViewModel.mount.collectAsState()
     val showDialog = rememberSaveable { mutableStateOf(false) }
     val showToast = rememberSaveable { mutableStateOf(false) }
-   val toastMessage =rememberSaveable { mutableStateOf("") }
+   val toastMessage =rememberSaveable { mutableStateOf(0) }
        Column(
            modifier = modifier,
            verticalArrangement = Arrangement.Top,
@@ -63,10 +64,11 @@ fun InsertTheMount(
                    , navController = navController, setShowDialog = {  show ->
                        showDialog.value = show
                    })
+               writeOnTagViewModel.setMount("")
            }
 
            if (showToast.value){
-               Toast.makeText(LocalContext.current, stringResource(id = R.string.please_insert_mount), Toast.LENGTH_LONG).show()
+               Toast.makeText(LocalContext.current, stringResource(id = toastMessage.value), Toast.LENGTH_LONG).show()
                showToast.value = false
            }
 
@@ -131,11 +133,12 @@ fun InsertTheMount(
                onClick = {
 
                    if (mount.value.isNullOrEmpty()){
+                       Log.d("abdo","null or empty")
+                       toastMessage.value =  R.string.please_insert_mount
                        showToast.value = true
-                       toastMessage.value = "من فضلك ادخل المبلغ المطلوب"
                    }else if (tag == null){
+                       toastMessage.value = R.string.this_device_isn_not_supported
                        showToast.value = true
-                       toastMessage.value = "هذا الجهاز لا يدعم ال NFC او انه مغلق"
                    }else{
                        showDialog.value = writeOnTagViewModel.writeToTagByNFC(tag)
                    }
