@@ -2,14 +2,17 @@ package com.apptikar.easy.peresentation
 
 import android.app.PendingIntent
 import android.content.Intent
+import android.nfc.NdefMessage
+import android.nfc.NdefRecord
 import android.nfc.NfcAdapter
 import android.nfc.Tag
+import android.nfc.tech.Ndef
+import android.nfc.tech.NdefFormatable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
@@ -18,12 +21,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
+
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
 
     private var nfcAdapter : NfcAdapter? = null
-    private var tag : Tag? = null
+     var tag : Tag? = null
 
     // Pending intent for NFC intent foreground dispatch.
     // Used to read all NDEF tags while the app is running in the foreground.
@@ -88,34 +92,117 @@ class MainActivity : ComponentActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         Log.e("Found intent in onNewIntent", intent?.action.toString())
-        // If we got an intent while the app is running, also check if it's a new NDEF message
-        // that was discovered
         if (intent != null) processIntent(intent)
     }
 
 
     fun processIntent(checkIntent: Intent) {
-        // Check if intent has the action of a discovered NFC tag
-        // with NDEF formatted contents
+
         if (checkIntent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
             Log.e("New NDEF intent", checkIntent.toString())
-            var data : String? = null ;
+            var data  = null ;
             if (Build.VERSION.SDK_INT >= 33) {
-                 data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG , Tag::class.java)?.get(0).toString()
+                 data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES , Tag::class.java)?.get(0) as Nothing?
             }else{
-               data =  checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG)?.get(0)?.toString()
+               var data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+                if (data != null) {
+                    val messages = arrayOfNulls<NdefMessage?>(data.size)// Array<NdefMessage>(rawMessages.size, {})
+                    for (i in data.indices) {
+                        messages[i] = data[i] as NdefMessage
+                    }
+                    // Process the messages array.
+                    processNdefMessages(messages)
+                }
             }
 
-            Log.e("tag data is :" ,"$data")
 
         }
 
         if(checkIntent.action == NfcAdapter.ACTION_TAG_DISCOVERED){
-          this.tag = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-            Log.e("our Tag is :" , tag.toString())
+          var tag :Tag?  = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+            val techList = tag!!.techList
+            Log.e("tag techs : " , techList.toString());
+            this.formatTag(tag);
+//            Log.e("our Tag is :" , tag.toString())
         }
 
         }
+
+    private fun processNdefMessages(ndefMessages: Array<NdefMessage?>) {
+        // Go through all NDEF messages found on the NFC tag
+        for (curMsg in ndefMessages) {
+            if (curMsg != null) {
+                // Print generic information about the NDEF message
+                Log.e("Message", curMsg.toString())
+                // The NDEF message usually contains 1+ records - print the number of records
+                Log.e("Records", curMsg.records.size.toString())
+
+                // Loop through all the records contained in the message
+                for (curRecord in curMsg.records) {
+                    if (curRecord.toUri() != null) {
+                        // URI NDEF Tag
+                        Log.e("- URI", curRecord.toUri().toString())
+                    } else {
+                        var stringContent = ""
+                        stringContent = String(curRecord.payload!!)
+                        // Other NDEF Tags - simply print the payload
+                        Log.e("- Contents",stringContent.substring(3) )
+                    }
+                }
+            }
+        }
+    }
+
+    fun writeToTagByNFC(tag : Tag?) : Boolean{
+        Log.e("fromMainActivity ; ", tag.toString());
+        try {
+            val records :Array<NdefRecord> = arrayOf(createRecord("545461235"))
+            val  message = NdefMessage(records)
+            val ndef = Ndef.get(tag)
+            ndef.connect()
+            ndef.writeNdefMessage(message)
+            ndef.close()
+
+            return true
+        }catch (exception: Exception){
+            Log.e("catch some error (mainactivity): " , exception.toString() );
+            return  false
+        }
+
+    }
+
+    fun formatTag(tag : Tag?){
+        val ndefFormatable = NdefFormatable.get(tag)
+    if (ndefFormatable != null) {
+        try {
+            ndefFormatable.connect();
+            val records :Array<NdefRecord> = arrayOf(createRecord("545461235"))
+            val  message = NdefMessage(records);
+            ndefFormatable.format(message);
+        } finally {
+            try {
+                ndefFormatable.close();
+            } catch (exception: Exception ) {
+                Log.e("Formating message : " , exception.toString())
+            }
+        }
+    }
+}
+
+    private fun createRecord(stringContent: String): NdefRecord {
+        val lang = "en"
+        val langBytes = lang.toByteArray(charset("US-ASCII"))
+        val textBytes = stringContent.toByteArray()
+        val payload = ByteArray(1 + langBytes.size + textBytes.size)
+
+        // the first byte of Ndef is the status of the lang
+        payload[0] = langBytes.size.toByte()
+
+        System.arraycopy(langBytes, 0, payload, 1, langBytes.size)
+        System.arraycopy(textBytes, 0, payload, 1 + langBytes.size, textBytes.size)
+
+        return NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, byteArrayOf(), payload)
+    }
     }
 
 

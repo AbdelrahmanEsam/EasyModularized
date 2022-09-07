@@ -4,6 +4,8 @@ import android.nfc.NdefMessage
 import android.nfc.NdefRecord
 import android.nfc.Tag
 import android.nfc.tech.Ndef
+import android.nfc.tech.NdefFormatable
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,8 +21,9 @@ class InsertTheMountViewModel constructor() : ViewModel() {
         _mount.value = mount
     }
 
-     fun writeToTagByNFC(tag: Tag) : Boolean{
-         return try {
+     fun writeToTagByNFC2(tag: Tag) : Boolean{
+         Log.e("formViewModel ; ", tag.toString());
+          try {
              val records :Array<NdefRecord> = arrayOf(createRecord(mount.value.toString()))
              val  message = NdefMessage(records)
              val ndef = Ndef.get(tag)
@@ -28,13 +31,30 @@ class InsertTheMountViewModel constructor() : ViewModel() {
              ndef.writeNdefMessage(message)
              ndef.close()
 
-             true
+             return true
          }catch (exception:Exception){
-             false
+             Log.e("catch some error (ViewModel): " , exception.toString() );
+             return  false
          }
 
     }
-
+     fun writeToTagByNFC(tag : Tag?){
+        val ndefFormatable = NdefFormatable.get(tag)
+        if (ndefFormatable != null) {
+            try {
+                ndefFormatable.connect();
+                val records :Array<NdefRecord> = arrayOf(createRecord("545461235"))
+                val  message = NdefMessage(records);
+                ndefFormatable.format(message);
+            } finally {
+                try {
+                    ndefFormatable.close();
+                } catch (exception: Exception ) {
+                    Log.e("Formating message : " , exception.toString())
+                }
+            }
+        }
+    }
     private fun createRecord(stringContent: String): NdefRecord {
         val lang = "en"
         val langBytes = lang.toByteArray(charset("US-ASCII"))

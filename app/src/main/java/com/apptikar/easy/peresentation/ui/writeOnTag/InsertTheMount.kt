@@ -34,6 +34,7 @@ import com.apptikar.easy.R
 import com.apptikar.easy.common.theme.BoxBackGroundColor
 import com.apptikar.easy.common.theme.Gray
 import com.apptikar.easy.common.theme.LightBlue
+import com.apptikar.easy.peresentation.MainActivity
 import com.apptikar.easy.peresentation.navigation.Destinations
 import com.apptikar.easy.peresentation.ui.doneDialog.DoneDialog
 
@@ -49,6 +50,7 @@ fun InsertTheMount(
     val showDialog = rememberSaveable { mutableStateOf(false) }
     val showToast = rememberSaveable { mutableStateOf(false) }
    val toastMessage =rememberSaveable { mutableStateOf(0) }
+    val tag =  (LocalContext.current as MainActivity).tag
        Column(
            modifier = modifier,
            verticalArrangement = Arrangement.Top,
