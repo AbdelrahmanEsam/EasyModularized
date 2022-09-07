@@ -38,9 +38,9 @@ fun Splash(modifier: Modifier, navController: NavHostController) {
                 .align(Alignment.CenterHorizontally)
 
         )
-
-
     }
+
+
 
 
 

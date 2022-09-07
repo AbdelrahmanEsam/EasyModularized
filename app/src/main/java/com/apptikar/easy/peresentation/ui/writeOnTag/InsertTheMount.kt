@@ -131,7 +131,7 @@ fun InsertTheMount(
            Spacer(modifier = Modifier.height(100.sdp))
            TextButton(
                onClick = {
-
+                   Log.e("fromInsertMoney : " , tag.toString())
                    if (mount.value.isNullOrEmpty()){
                        Log.d("abdo","null or empty")
                        toastMessage.value =  R.string.please_insert_mount

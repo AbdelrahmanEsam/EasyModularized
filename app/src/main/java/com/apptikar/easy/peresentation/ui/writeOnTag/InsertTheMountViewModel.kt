@@ -9,7 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.lang.Exception
 
-class InsertTheMountViewModel : ViewModel() {
+class InsertTheMountViewModel constructor() : ViewModel() {
+
 
     private val _mount = MutableStateFlow<String?>(null)
     val mount : StateFlow<String?> get() =  _mount
@@ -19,7 +20,6 @@ class InsertTheMountViewModel : ViewModel() {
     }
 
      fun writeToTagByNFC(tag: Tag) : Boolean{
-
          return try {
              val records :Array<NdefRecord> = arrayOf(createRecord(mount.value.toString()))
              val  message = NdefMessage(records)

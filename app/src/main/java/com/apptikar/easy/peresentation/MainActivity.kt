@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
@@ -43,8 +44,6 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
-
-
             val windowSizeDp = rememberWindowSizeDp(this)
 
             EasyModal(
@@ -100,12 +99,20 @@ class MainActivity : ComponentActivity() {
         // with NDEF formatted contents
         if (checkIntent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
             Log.e("New NDEF intent", checkIntent.toString())
-            tag = if (Build.VERSION.SDK_INT >= 33) {
-                checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG,Tag::class.java)?.get(0)
+            var data : String? = null ;
+            if (Build.VERSION.SDK_INT >= 33) {
+                 data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG , Tag::class.java)?.get(0).toString()
             }else{
-                checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG)?.get(0) as Tag?
+               data =  checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_TAG)?.get(0)?.toString()
             }
 
+            Log.e("tag data is :" ,"$data")
+
+        }
+
+        if(checkIntent.action == NfcAdapter.ACTION_TAG_DISCOVERED){
+          this.tag = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
+            Log.e("our Tag is :" , tag.toString())
         }
 
         }
