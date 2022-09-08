@@ -13,11 +13,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import com.apptikar.dribbox.utils.rememberWindowSizeDp
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
@@ -27,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
 
     private var nfcAdapter : NfcAdapter? = null
-     var tag : Tag? = null
+     var tag  = MutableStateFlow<Tag?>(null)
 
     // Pending intent for NFC intent foreground dispatch.
     // Used to read all NDEF tags while the app is running in the foreground.
@@ -53,7 +55,6 @@ class MainActivity : ComponentActivity() {
             EasyModal(
                 devicePosture =  devicePosture,
                 windowSizeDp =  windowSizeDp,
-                tag
             )
         }
     }
@@ -98,31 +99,31 @@ class MainActivity : ComponentActivity() {
 
     fun processIntent(checkIntent: Intent) {
 
-        if (checkIntent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
-            Log.e("New NDEF intent", checkIntent.toString())
-            var data  = null ;
-            if (Build.VERSION.SDK_INT >= 33) {
-                 data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES , Tag::class.java)?.get(0) as Nothing?
-            }else{
-               var data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
-                if (data != null) {
-                    val messages = arrayOfNulls<NdefMessage?>(data.size)// Array<NdefMessage>(rawMessages.size, {})
-                    for (i in data.indices) {
-                        messages[i] = data[i] as NdefMessage
-                    }
-                    // Process the messages array.
-                    processNdefMessages(messages)
-                }
-            }
-
-
-        }
+//        if (checkIntent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
+//            Log.e("New NDEF intent", checkIntent.toString())
+//            var data  = null ;
+//            if (Build.VERSION.SDK_INT >= 33) {
+//                 data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES , Tag::class.java)?.get(0) as Nothing?
+//            }else{
+//               var data = checkIntent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES)
+//                if (data != null) {
+//                    val messages = arrayOfNulls<NdefMessage?>(data.size)// Array<NdefMessage>(rawMessages.size, {})
+//                    for (i in data.indices) {
+//                        messages[i] = data[i] as NdefMessage
+//                    }
+//                    // Process the messages array.
+//                    processNdefMessages(messages)
+//                }
+//            }
+//
+//
+//        }
 
         if(checkIntent.action == NfcAdapter.ACTION_TAG_DISCOVERED){
-          var tag :Tag?  = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)
-            val techList = tag!!.techList
-            Log.e("tag techs : " , techList.toString());
-            this.formatTag(tag);
+           tag   = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
+            val techList = tag.value?.techList
+            Log.e("tag techs : " , techList.toString())
+
 //            Log.e("our Tag is :" , tag.toString())
         }
 

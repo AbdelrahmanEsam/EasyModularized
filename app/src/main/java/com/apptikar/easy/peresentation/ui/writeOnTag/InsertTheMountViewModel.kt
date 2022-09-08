@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import java.lang.Exception
 
-class InsertTheMountViewModel constructor() : ViewModel() {
+class InsertTheMountViewModel : ViewModel() {
 
 
     private val _mount = MutableStateFlow<String?>(null)
@@ -38,23 +38,33 @@ class InsertTheMountViewModel constructor() : ViewModel() {
          }
 
     }
-     fun writeToTagByNFC(tag : Tag?){
-        val ndefFormatable = NdefFormatable.get(tag)
-        if (ndefFormatable != null) {
-            try {
-                ndefFormatable.connect();
-                val records :Array<NdefRecord> = arrayOf(createRecord("545461235"))
-                val  message = NdefMessage(records);
-                ndefFormatable.format(message);
-            } finally {
-                try {
-                    ndefFormatable.close();
-                } catch (exception: Exception ) {
-                    Log.e("Formating message : " , exception.toString())
-                }
-            }
-        }
+     fun writeToTagByNFC(tag : Tag?): Boolean{
+         tag?.let {
+             val ndefFormatable = NdefFormatable.get(tag)
+             if (ndefFormatable != null) {
+                 return try {
+                     ndefFormatable.connect()
+                     val records :Array<NdefRecord> = arrayOf(createRecord("545461235"))
+                     val  message = NdefMessage(records)
+                     ndefFormatable.format(message)
+                     true
+                 }catch (exception: Exception) {
+                     false
+                 }finally {
+                     try {
+                         ndefFormatable.close()
+                     } catch (exception: Exception ) {
+                         Log.e("Formating message : " , exception.toString())
+                     }
+                 }
+             }else{
+                 return false
+             }
+         }
+
+         return false
     }
+
     private fun createRecord(stringContent: String): NdefRecord {
         val lang = "en"
         val langBytes = lang.toByteArray(charset("US-ASCII"))

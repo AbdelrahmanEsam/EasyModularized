@@ -1,19 +1,13 @@
 package com.apptikar.easy.peresentation.ui.writeOnTag
 
-import android.nfc.Tag
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,8 +29,10 @@ import com.apptikar.easy.common.theme.BoxBackGroundColor
 import com.apptikar.easy.common.theme.Gray
 import com.apptikar.easy.common.theme.LightBlue
 import com.apptikar.easy.peresentation.MainActivity
-import com.apptikar.easy.peresentation.navigation.Destinations
+import com.apptikar.easy.peresentation.navigation.Destinations.DoneDialog
 import com.apptikar.easy.peresentation.ui.doneDialog.DoneDialog
+import com.apptikar.easy.peresentation.ui.nearTheTagDialog.NearTheTagDialog
+import kotlinx.coroutines.launch
 
 
 @Composable
@@ -44,13 +40,17 @@ fun InsertTheMount(
     modifier: Modifier,
     navController: NavHostController,
     writeOnTagViewModel: InsertTheMountViewModel = hiltViewModel(),
-    tag: Tag?
+
 ) {
    val mount =  writeOnTagViewModel.mount.collectAsState()
-    val showDialog = rememberSaveable { mutableStateOf(false) }
+    val showTagDialog = rememberSaveable { mutableStateOf(false) }
+    val showDoneDialog = rememberSaveable { mutableStateOf(false) }
     val showToast = rememberSaveable { mutableStateOf(false) }
    val toastMessage =rememberSaveable { mutableStateOf(0) }
-    val tag =  (LocalContext.current as MainActivity).tag
+    val tag =  (LocalContext.current as MainActivity).tag.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
+
        Column(
            modifier = modifier,
            verticalArrangement = Arrangement.Top,
@@ -58,17 +58,27 @@ fun InsertTheMount(
        ) {
 
 
-           if (showDialog.value){
+           if (showTagDialog.value){
 
-               DoneDialog(modifier = Modifier
+               NearTheTagDialog(modifier = Modifier
                    .clip(RoundedCornerShape(10.sdp))
-                   .background(Color.White)
-                   , navController = navController, setShowDialog = {  show ->
-                       showDialog.value = show
-                   })
-               writeOnTagViewModel.setMount("")
+                   .background(Color.White),
+                    navController = navController,
+               )
+
+
            }
 
+
+           if (showDoneDialog.value){
+                            DoneDialog(modifier = Modifier
+                  .clip(RoundedCornerShape(10.sdp))
+                  .background(Color.White)
+                   , navController = navController, setShowDialog = {  show ->
+                      showDoneDialog.value = show
+                  })
+               writeOnTagViewModel.setMount("")
+           }
            if (showToast.value){
                Toast.makeText(LocalContext.current, stringResource(id = toastMessage.value), Toast.LENGTH_LONG).show()
                showToast.value = false
@@ -89,9 +99,9 @@ fun InsertTheMount(
            Spacer(modifier = Modifier.size(50.sdp))
            Text(text = stringResource(R.string.the_mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Bold, fontSize = 20.textSdp)
            Spacer(modifier = Modifier.height(20.sdp))
-           Text(text = stringResource(R.string.insert_mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Color.Black)
+           Text(text = stringResource(R.string.insert_the_ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Color.Black)
            Spacer(modifier = Modifier.height(20.sdp))
-           Text(text = stringResource(R.string.mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Gray)
+           Text(text = stringResource(R.string.ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Gray)
            Spacer(modifier = Modifier.height(5.sdp))
            TextField(
                value = mount.value ?: "" ,
@@ -99,7 +109,7 @@ fun InsertTheMount(
                modifier = Modifier
                    .fillMaxWidth()
                    .height(45.sdp),
-               textStyle = TextStyle(fontSize = 10.textSdp),
+               textStyle = TextStyle(fontSize = 10.textSdp, color = Color.Black),
                shape = RoundedCornerShape(topStart = 8.sdp , topEnd = 8.sdp),
                maxLines = 1,
                singleLine = true,
@@ -116,7 +126,7 @@ fun InsertTheMount(
                        horizontalArrangement = Arrangement.End
                    ){
 
-                       Text(text = stringResource(R.string.price),
+                       Text(text = stringResource(R.string.ID_number),
                            style = MaterialTheme.typography.body1,
                            color = Gray,
                            modifier = Modifier
@@ -136,13 +146,15 @@ fun InsertTheMount(
                    Log.e("fromInsertMoney : " , tag.toString())
                    if (mount.value.isNullOrEmpty()){
                        Log.d("abdo","null or empty")
-                       toastMessage.value =  R.string.please_insert_mount
-                       showToast.value = true
-                   }else if (tag == null){
-                       toastMessage.value = R.string.this_device_isn_not_supported
+                       toastMessage.value =  R.string.please_insert_the_ID_number
                        showToast.value = true
                    }else{
-                       showDialog.value = writeOnTagViewModel.writeToTagByNFC(tag)
+                       showTagDialog.value = true
+                      coroutineScope.launch {
+                          val writeSucceed =     writeOnTagViewModel.writeToTagByNFC(tag.value)
+                          showTagDialog.value = writeSucceed.not()
+                          showDoneDialog.value  = writeSucceed
+                      }
                    }
 
 
@@ -165,6 +177,9 @@ fun InsertTheMount(
        }
 
 }
+
+
+
 
 
 

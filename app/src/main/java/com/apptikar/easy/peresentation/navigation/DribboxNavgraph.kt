@@ -25,7 +25,6 @@ fun EasyNavGraph(
     navController: NavHostController,
     modifier: Modifier,
     scaffoldState: ScaffoldState,
-    tag: Tag?,
     ) {
 
 
@@ -63,7 +62,7 @@ fun EasyNavGraph(
                     .verticalScroll(
                         rememberScrollState()
                     )
-                    .padding(horizontal = 20.sdp), navController = navController,tag = tag
+                    .padding(horizontal = 20.sdp), navController = navController
             )
         }
 

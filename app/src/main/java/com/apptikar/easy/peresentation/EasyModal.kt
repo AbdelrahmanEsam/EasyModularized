@@ -21,7 +21,6 @@ import kotlinx.coroutines.flow.StateFlow
 fun EasyModal(
     devicePosture: StateFlow<WindowLayoutInfo>,
     windowSizeDp: DpSize,
-    tag: Tag?,
 ) {
     val devicePostureValue by devicePosture.collectAsState()
 
@@ -39,7 +38,7 @@ fun EasyModal(
             ){paddingValues ->
 
                 Row(Modifier.fillMaxSize()) {
-                    EasyNavGraph(screenClassifier = screenClassifier, navController = navController , modifier = Modifier.padding(paddingValues),scaffoldState,tag)
+                    EasyNavGraph(screenClassifier = screenClassifier, navController = navController , modifier = Modifier.padding(paddingValues),scaffoldState)
 
                 }
 

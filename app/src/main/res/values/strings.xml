@@ -2,8 +2,8 @@
     <string name="app_name">Easy</string>
     <string name="confirm">تأكيد</string>
     <string name="the_mount">المبلغ المطلوب</string>
-    <string name="insert_mount">من فضلك ادخل سعر الطلب</string>
-    <string name="mount">السعر</string>
+    <string name="insert_the_ID_number">NFC الكتابه على كروت ال </string>
+    <string name="mount">الرقم التعريفي</string>
     <string name="back">back</string>
     <string name="insert_password">ادخل كلمة المرور</string>
     <string name="login">تسجيل دخول</string>
@@ -14,7 +14,8 @@
     <string name="logo">logo</string>
     <string name="Well">حسنا</string>
     <string name="done_successfully">تم إضافة سعر الطلب\n بنجاح</string>
-    <string name="price">السعر</string>
-    <string name="please_insert_mount">من فضلك ادخل المبلغ المطلوب</string>
+    <string name="ID_number">الرقم التعريفي</string>
+    <string name="please_insert_the_ID_number">من فضلك ادخل الرقم التعريفي الخاص بالعضو</string>
     <string name="this_device_isn_not_supported">هذا الجهاز لا يدعم ال NFC او انه مغلق</string>
+    <string name="please_close_the_card">من فضلك قرب الكارت</string>
 </resources>
