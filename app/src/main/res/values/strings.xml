@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Easy</string>
+    <string name="app_name">Easy Writer</string>
     <string name="confirm">تأكيد</string>
     <string name="the_mount">المبلغ المطلوب</string>
     <string name="insert_the_ID_number">NFC الكتابه على كروت ال </string>
