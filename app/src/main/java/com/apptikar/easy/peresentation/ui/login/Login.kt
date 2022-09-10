@@ -80,7 +80,7 @@ fun Login(
 
         LaunchedEffect(key1 = userInfo.value){
             Log.d("abdo","success")
-            if (userInfo.value?.status == 1 && userInfo.value?.data?.type == 2) {
+            if (userInfo.value?.status == 1 ) {
                 this.launch(Dispatchers.IO) {
                    context.saveToken("tokenKey", userInfo.value!!.data.token)
                 }
@@ -89,13 +89,11 @@ fun Login(
 
 
             } else {
-                if (loginViewModel.userInfo.value != null) {
                     Toast.makeText(
                         context,
-                        R.string.you_are_not_have_the_permission_to_sign_in,
+                         userInfo.value?.message,
                         Toast.LENGTH_LONG
                     ).show()
-                }
             }
         }
 

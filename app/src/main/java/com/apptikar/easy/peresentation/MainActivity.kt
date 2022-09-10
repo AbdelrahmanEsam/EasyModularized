@@ -20,10 +20,7 @@ import com.apptikar.dribbox.utils.rememberWindowSizeDp
 import com.apptikar.easy.R
 import com.apptikar.easy.common.utils.ConnectivityObserver
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -126,11 +123,13 @@ class MainActivity : ComponentActivity() {
     fun processIntent(checkIntent: Intent) {
 
 
-        if (checkIntent.action == NfcAdapter.ACTION_TAG_DISCOVERED) {
-            tag = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
+        if (checkIntent.action == NfcAdapter.ACTION_TAG_DISCOVERED ||  checkIntent.action == NfcAdapter.ACTION_NDEF_DISCOVERED) {
+            val localTag :Tag? = checkIntent.getParcelableExtra(NfcAdapter.EXTRA_TAG)!!
+            tag.update { localTag }
             val techList = tag.value?.techList
             Log.e("tag techs : ", techList.toString())
         }
+
 
     }
 }

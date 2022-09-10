@@ -10,6 +10,5 @@ data class DataX(
     val name: String,
     val type: Int,
     val code: String,
-    val balance: String,
     val token: String
 ) : Parcelable

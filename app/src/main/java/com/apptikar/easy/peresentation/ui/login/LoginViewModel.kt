@@ -47,12 +47,11 @@ class LoginViewModel @Inject constructor(private val loginRepo: LoginRepo)  : Vi
         loading.value = true
         viewModelScope.launch(Dispatchers.IO)
         {
-
+            Log.e("login" ,code.value.toString()+"\n"+password.value.toString() )
             val response =  loginRepo.login(code.value.toString(),password.value.toString())
             loading.value = false
             if (response.isSuccessful){
                 _userInfo.value = response.body()!!
-
             }
         }
     }

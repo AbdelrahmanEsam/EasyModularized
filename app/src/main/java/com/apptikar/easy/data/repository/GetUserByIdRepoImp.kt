@@ -8,7 +8,8 @@ import javax.inject.Inject
 
 class GetUserByIdRepoImp @Inject constructor(private val retrofitApi: RetrofitApi)  : GetUserByIdRepo {
 
-    override suspend fun getUserById(userId: String): Response<UserByIdPojo> {
-        return retrofitApi.getUserById( userId)
+    override suspend fun getUserById(userId: String , token : String?): Response<UserByIdPojo> {
+
+        return retrofitApi.getUserById( token ,userId)
     }
 }

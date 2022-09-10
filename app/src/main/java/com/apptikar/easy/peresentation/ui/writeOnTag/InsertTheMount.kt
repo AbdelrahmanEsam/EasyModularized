@@ -30,6 +30,7 @@ import com.apptikar.easy.common.theme.Gray
 import com.apptikar.easy.common.theme.LightBlue
 import com.apptikar.easy.common.utils.ConnectivityObserver
 import com.apptikar.easy.common.utils.navigateToInclusive
+import com.apptikar.easy.common.utils.readToken
 import com.apptikar.easy.common.utils.saveToken
 import com.apptikar.easy.peresentation.MainActivity
 import com.apptikar.easy.peresentation.navigation.Destinations
@@ -112,9 +113,7 @@ fun InsertTheMount(
 
             )
             Spacer(modifier = Modifier.size(50.sdp))
-            Text(text = stringResource(R.string.the_mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Bold, fontSize = 20.textSdp)
-            Spacer(modifier = Modifier.height(20.sdp))
-            Text(text = stringResource(R.string.insert_the_ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Color.Black)
+            Text(text = stringResource(R.string.insert_the_ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Bold, fontSize = 20.textSdp)
             Spacer(modifier = Modifier.height(20.sdp))
             Text(text = stringResource(R.string.ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Gray)
             Spacer(modifier = Modifier.height(5.sdp))
@@ -167,22 +166,41 @@ fun InsertTheMount(
                             toastMessage.value =  R.string.please_insert_the_ID_number
                             showToast.value = true
                         }else{
-                            writeOnTagViewModel.getUserById()
                             coroutineScope.launch {
-                                writeOnTagViewModel.isLoading.collectLatest { isLoading ->
-                                   if(!isLoading){
+                                val token : String? = context.readToken("tokenKey")
+                                writeOnTagViewModel.getUserById(token)
+                            }
+                            coroutineScope.launch {
+                                writeOnTagViewModel.response.collectLatest {
+                                   if(it?.status == 1 ){
                                             showTagDialog.value = true
-                                            tag.collectLatest { tag ->
-                                                if (tag != null){
-                                                    val writeSucceed = writeOnTagViewModel.writeToTagByNFC(tag)
+                                            tag.collectLatest {
+                                                Log.e("there is an tag upproch " , it.toString())
+                                                if (it != null){
+                                                    Log.e("for lisener" , "tag is not null")
+                                                    val writeSucceed = writeOnTagViewModel.writeToTagByNFC(it)
+                                                    Log.e("for lisener" , writeSucceed.toString())
+                                                    if(writeSucceed.not()){
+                                                            toastMessage.value =
+                                                                R.string.card_is_already_written
+                                                            showToast.value = true
+                                                    }
                                                     showTagDialog.value = writeSucceed.not()
                                                     showDoneDialog.value  = writeSucceed
-                                                    writeOnTagViewModel.setUserId(null)
+                                                    if(writeSucceed) {
+                                                        writeOnTagViewModel.setUserId(null)
+                                                        writeOnTagViewModel.setCode(null)
+                                                        tag.update { null }
+                                                        writeOnTagViewModel.emptyResponse()
+                                                    }
                                                 }
                                             }
-                                            tag.update { null }
-                                    }
-
+                                    }else{
+                                        if(it != null ) {
+                                            toastMessage.value = R.string.there_is_no_member
+                                            showToast.value = true
+                                        }
+                                   }
                                 }
                             }
                         }
@@ -208,11 +226,11 @@ fun InsertTheMount(
 
         }
 
-        CircularProgressIndicator(
-            color = LightBlue,
-            modifier = Modifier.then(Modifier.size(if (writeOnTagViewModel.isLoading.value){60.sdp}else{0.sdp})),
-           strokeWidth = 4.sdp
-        )
+//        CircularProgressIndicator(
+//            color = LightBlue,
+//            modifier = Modifier.then(Modifier.size(if (writeOnTagViewModel.isLoading.value){60.sdp}else{0.sdp})),
+//           strokeWidth = 4.sdp
+//        )
     }
 
 

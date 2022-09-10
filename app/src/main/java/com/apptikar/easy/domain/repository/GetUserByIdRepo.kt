@@ -6,5 +6,5 @@ import retrofit2.Response
 
 interface GetUserByIdRepo {
 
-    suspend fun getUserById(userId:String) : Response<UserByIdPojo>
+    suspend fun getUserById(userId:String , token :String?) : Response<UserByIdPojo>
 }

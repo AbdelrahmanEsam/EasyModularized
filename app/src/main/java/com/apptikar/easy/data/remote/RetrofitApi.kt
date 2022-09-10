@@ -7,12 +7,12 @@ import retrofit2.http.*
 interface RetrofitApi {
 
     @FormUrlEncoded
-    @POST("api/Auth_general/login")
-    suspend fun login(@Field("code") code : String , @Field("password") password :String) : Response<LoginPojo>
+    @POST("apiAdmin/Auth_general/login")
+    suspend fun login(@Field("name") name : String , @Field("password") password :String) : Response<LoginPojo>
 
 
-    @GET("api/General/getUserById")
-    suspend fun getUserById(@Query("user_id")id:String) : Response<UserByIdPojo>
+    @GET("apiAdmin/User/single")
+    suspend fun getUserById(@Header("Authorization") token:String? , @Query("user_id")id:String) : Response<UserByIdPojo>
 
 
 }
