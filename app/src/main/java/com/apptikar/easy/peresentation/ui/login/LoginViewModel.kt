@@ -1,12 +1,22 @@
 package com.apptikar.easy.peresentation.ui.login
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.apptikar.easy.pojos.LoginPojo
+import androidx.lifecycle.viewModelScope
+import com.apptikar.easy.common.utils.ConnectivityObserver
+import com.apptikar.easy.domain.repository.LoginRepo
+import com.apptikar.easy.data.dto.LoginPojo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 
-class LoginViewModel  : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(private val loginRepo: LoginRepo)  : ViewModel() {
 
    private val _code = MutableStateFlow<String?>(null)
     val code : StateFlow<String?> get() =  _code
@@ -19,7 +29,7 @@ class LoginViewModel  : ViewModel() {
     val userInfo: StateFlow<LoginPojo?> = _userInfo
 
 
-  private  val loading = MutableStateFlow<Boolean?>(null)
+    private  val loading = MutableStateFlow<Boolean?>(null)
 
 
     fun setCode(code:String){
@@ -33,18 +43,19 @@ class LoginViewModel  : ViewModel() {
 
 
 
-//    fun login(){
-//        loading.value = true
-//        viewModelScope.launch(Dispatchers.IO)
-//        {
-//            val response =  loginRepo.login(code.value.toString(),password.value.toString())
-//            loading.value = false
-//            if (response.isSuccessful){
-//                _userInfo.value = response.body()!!
-//
-//            }
-//        }
-//    }
+    fun login(){
+        loading.value = true
+        viewModelScope.launch(Dispatchers.IO)
+        {
+
+            val response =  loginRepo.login(code.value.toString(),password.value.toString())
+            loading.value = false
+            if (response.isSuccessful){
+                _userInfo.value = response.body()!!
+
+            }
+        }
+    }
 
     fun clearUserInfo(){
         _userInfo.value = null

@@ -18,4 +18,6 @@
     <string name="please_insert_the_ID_number">من فضلك ادخل الرقم التعريفي الخاص بالعضو</string>
     <string name="this_device_isn_not_supported">هذا الجهاز لا يدعم ال NFC او انه مغلق</string>
     <string name="please_close_the_card">من فضلك قرب الكارت</string>
+    <string name="you_are_not_have_the_permission_to_sign_in">غير مسموح لك بتسجيل الدخول</string>
+    <string name="connectivity_lost">انت غير متصل بالانترنت</string>
 </resources>

@@ -1,7 +1,6 @@
-package com.apptikar.easy.pojos
+package com.apptikar.easy.data.dto
 
 
-import com.apptikar.easy.data.dto.Data
 
 data class UserByIdPojo(
     val status: Int,

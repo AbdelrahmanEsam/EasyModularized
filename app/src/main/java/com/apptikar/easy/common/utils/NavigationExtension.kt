@@ -1,4 +1,4 @@
-package com.apptikar.dribbox.utils
+package com.apptikar.easy.common.utils
 
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -15,5 +15,12 @@ fun NavHostController.navigateSingleTopTo(route: String) =
         restoreState = true
 
     }
+
+
+fun NavHostController.navigateToInclusive(route: String) {
+    this.navigate(route){
+        popUpTo(0)
+    }
+}
 
 

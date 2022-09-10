@@ -1,10 +1,11 @@
-package com.apptikar.easy.pojos
+package com.apptikar.easy.data.dto
 
 
-import com.apptikar.easy.data.dto.DataX
+
+
 
 data class LoginPojo(
     val status: Int,
     val message: String,
-    val `data`: DataX
+    val `data`:  DataX
 )

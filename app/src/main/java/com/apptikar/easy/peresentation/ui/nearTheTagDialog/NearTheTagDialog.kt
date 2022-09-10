@@ -1,6 +1,5 @@
 package com.apptikar.easy.peresentation.ui.nearTheTagDialog
 
-import android.nfc.Tag
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -25,14 +24,12 @@ import com.apptikar.dribbox.utils.sdp
 import com.apptikar.dribbox.utils.textSdp
 import com.apptikar.easy.R
 import com.apptikar.easy.common.theme.LightBlue
-import com.apptikar.easy.peresentation.ui.writeOnTag.InsertTheMountViewModel
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun NearTheTagDialog(
     modifier: Modifier,
-    navController: NavController,
+    setShowDialog: (Boolean) -> Unit
     ) {
 
     val nfc by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.nfc_lottie))
@@ -42,9 +39,9 @@ fun NearTheTagDialog(
 
     Dialog(
         onDismissRequest = {
-             navController.popBackStack()
+         setShowDialog(false)
                            },
-        properties = DialogProperties(usePlatformDefaultWidth = false),
+        properties = DialogProperties(usePlatformDefaultWidth = false, dismissOnClickOutside = true, dismissOnBackPress = true),
         // then setting usePlatformDefaultWidth to false
         content = {
             Column(modifier.size(260.sdp), verticalArrangement = Arrangement.Top, Alignment.CenterHorizontally) {

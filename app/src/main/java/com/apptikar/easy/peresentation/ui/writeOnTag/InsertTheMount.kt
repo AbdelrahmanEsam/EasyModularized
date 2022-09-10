@@ -28,10 +28,16 @@ import com.apptikar.easy.R
 import com.apptikar.easy.common.theme.BoxBackGroundColor
 import com.apptikar.easy.common.theme.Gray
 import com.apptikar.easy.common.theme.LightBlue
+import com.apptikar.easy.common.utils.ConnectivityObserver
+import com.apptikar.easy.common.utils.navigateToInclusive
+import com.apptikar.easy.common.utils.saveToken
 import com.apptikar.easy.peresentation.MainActivity
-import com.apptikar.easy.peresentation.navigation.Destinations.DoneDialog
+import com.apptikar.easy.peresentation.navigation.Destinations
 import com.apptikar.easy.peresentation.ui.doneDialog.DoneDialog
 import com.apptikar.easy.peresentation.ui.nearTheTagDialog.NearTheTagDialog
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 
@@ -41,140 +47,174 @@ fun InsertTheMount(
     navController: NavHostController,
     writeOnTagViewModel: InsertTheMountViewModel = hiltViewModel(),
 
-) {
-   val mount =  writeOnTagViewModel.mount.collectAsState()
+    ) {
+    val mount =  writeOnTagViewModel.userId.collectAsState()
     val showTagDialog = rememberSaveable { mutableStateOf(false) }
     val showDoneDialog = rememberSaveable { mutableStateOf(false) }
     val showToast = rememberSaveable { mutableStateOf(false) }
-   val toastMessage =rememberSaveable { mutableStateOf(0) }
-    val tag =  (LocalContext.current as MainActivity).tag.collectAsState()
+    val toastMessage =rememberSaveable { mutableStateOf(0) }
+    val tag =  (LocalContext.current as MainActivity).tag
+    val connectivityStatus = (LocalContext.current as MainActivity).connectivityStatus
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    Box(contentAlignment = Alignment.Center) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.Top,
+            Alignment.End
+        ) {
 
 
-       Column(
-           modifier = modifier,
-           verticalArrangement = Arrangement.Top,
-           Alignment.End
-       ) {
+            if (showTagDialog.value){
 
-
-           if (showTagDialog.value){
-
-               NearTheTagDialog(modifier = Modifier
-                   .clip(RoundedCornerShape(10.sdp))
-                   .background(Color.White),
-                    navController = navController,
-               )
-
-
-           }
-
-
-           if (showDoneDialog.value){
-                            DoneDialog(modifier = Modifier
-                  .clip(RoundedCornerShape(10.sdp))
-                  .background(Color.White)
-                   , navController = navController, setShowDialog = {  show ->
-                      showDoneDialog.value = show
-                  })
-               writeOnTagViewModel.setMount("")
-           }
-           if (showToast.value){
-               Toast.makeText(LocalContext.current, stringResource(id = toastMessage.value), Toast.LENGTH_LONG).show()
-               showToast.value = false
-           }
-
-           Spacer(modifier = Modifier.size(30.sdp))
-           Image(
-               painter = painterResource(id = R.drawable.ic_back),
-               contentDescription = stringResource(R.string.back),
-               modifier = Modifier
-                   .size(25.sdp)
-                   .background(Color.White)
-                   .clickable {
-                       navController.popBackStack()
+                NearTheTagDialog(modifier = Modifier
+                    .clip(RoundedCornerShape(10.sdp))
+                    .background(Color.White),
+                   setShowDialog = {  show ->
+                       showTagDialog.value = show
                    }
-
-           )
-           Spacer(modifier = Modifier.size(50.sdp))
-           Text(text = stringResource(R.string.the_mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Bold, fontSize = 20.textSdp)
-           Spacer(modifier = Modifier.height(20.sdp))
-           Text(text = stringResource(R.string.insert_the_ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Color.Black)
-           Spacer(modifier = Modifier.height(20.sdp))
-           Text(text = stringResource(R.string.ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Gray)
-           Spacer(modifier = Modifier.height(5.sdp))
-           TextField(
-               value = mount.value ?: "" ,
-               onValueChange = {  writeOnTagViewModel.setMount(it) },
-               modifier = Modifier
-                   .fillMaxWidth()
-                   .height(45.sdp),
-               textStyle = TextStyle(fontSize = 10.textSdp, color = Color.Black),
-               shape = RoundedCornerShape(topStart = 8.sdp , topEnd = 8.sdp),
-               maxLines = 1,
-               singleLine = true,
-               colors = TextFieldDefaults.textFieldColors(
-                   backgroundColor = BoxBackGroundColor,
-                   disabledIndicatorColor = Color.Black,
-                   focusedIndicatorColor = Color.Black,
-                   unfocusedIndicatorColor = Color.Black
-               ),
-               placeholder = {
-                   Row(
-                       modifier = Modifier.fillMaxSize(),
-                       verticalAlignment = Alignment.CenterVertically,
-                       horizontalArrangement = Arrangement.End
-                   ){
-
-                       Text(text = stringResource(R.string.ID_number),
-                           style = MaterialTheme.typography.body1,
-                           color = Gray,
-                           modifier = Modifier
-                               .wrapContentSize()
-                               .offset(x = (-2).dp),
-                           fontSize = 10.textSdp)
-                   }
-
-               },
-               keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-
-           )
-
-           Spacer(modifier = Modifier.height(100.sdp))
-           TextButton(
-               onClick = {
-                   Log.e("fromInsertMoney : " , tag.toString())
-                   if (mount.value.isNullOrEmpty()){
-                       Log.d("abdo","null or empty")
-                       toastMessage.value =  R.string.please_insert_the_ID_number
-                       showToast.value = true
-                   }else{
-                       showTagDialog.value = true
-                      coroutineScope.launch {
-                          val writeSucceed =     writeOnTagViewModel.writeToTagByNFC(tag.value)
-                          showTagDialog.value = writeSucceed.not()
-                          showDoneDialog.value  = writeSucceed
-                      }
-                   }
+                )
 
 
-               },
-               modifier = Modifier
-                   .background(
-                       color = LightBlue,
-                       shape = RoundedCornerShape(10.sdp)
-                   )
-                   .padding(horizontal = 10.dp)
-                   .fillMaxWidth()
-                   .height(45.sdp)
-
-           ) {
-               Text(text = stringResource(R.string.confirm), style =  MaterialTheme.typography.body1, fontSize = 12.textSdp, color = Color.White)
-           }
-           Spacer(modifier = Modifier.height(30.sdp))
+            }
 
 
-       }
+            if (showDoneDialog.value){
+                DoneDialog(modifier = Modifier
+                    .clip(RoundedCornerShape(10.sdp))
+                    .background(Color.White)
+                    , navController = navController, setShowDialog = {  show ->
+                        showDoneDialog.value = show
+                    })
+                writeOnTagViewModel.setUserId("")
+            }
+            if (showToast.value){
+                Toast.makeText(LocalContext.current, stringResource(id = toastMessage.value), Toast.LENGTH_LONG).show()
+                showToast.value = false
+            }
+
+            Spacer(modifier = Modifier.size(30.sdp))
+            Image(
+                painter = painterResource(id = R.drawable.ic_back),
+                contentDescription = stringResource(R.string.back),
+                modifier = Modifier
+                    .size(25.sdp)
+                    .background(Color.White)
+                    .clickable {
+                        coroutineScope.launch {
+                            launch(Dispatchers.IO) {
+                                context.saveToken("tokenKey", "")
+                            }
+                        }
+                        navController.navigateToInclusive(Destinations.Login)
+                    }
+
+            )
+            Spacer(modifier = Modifier.size(50.sdp))
+            Text(text = stringResource(R.string.the_mount), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Bold, fontSize = 20.textSdp)
+            Spacer(modifier = Modifier.height(20.sdp))
+            Text(text = stringResource(R.string.insert_the_ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Color.Black)
+            Spacer(modifier = Modifier.height(20.sdp))
+            Text(text = stringResource(R.string.ID_number), style = MaterialTheme.typography.body1, fontWeight = FontWeight.Normal, fontSize = 12.textSdp, color = Gray)
+            Spacer(modifier = Modifier.height(5.sdp))
+            TextField(
+                value = mount.value ?: "" ,
+                onValueChange = {  writeOnTagViewModel.setUserId(it) },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.sdp),
+                textStyle = TextStyle(fontSize = 10.textSdp, color = Color.Black),
+                shape = RoundedCornerShape(topStart = 8.sdp , topEnd = 8.sdp),
+                maxLines = 1,
+                singleLine = true,
+                colors = TextFieldDefaults.textFieldColors(
+                    backgroundColor = BoxBackGroundColor,
+                    disabledIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Black,
+                    unfocusedIndicatorColor = Color.Black
+                ),
+                placeholder = {
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.End
+                    ){
+
+                        Text(text = stringResource(R.string.ID_number),
+                            style = MaterialTheme.typography.body1,
+                            color = Gray,
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .offset(x = (-2).dp),
+                            fontSize = 10.textSdp)
+                    }
+
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+
+            )
+
+            Spacer(modifier = Modifier.height(100.sdp))
+            TextButton(
+                onClick = {
+                    if (connectivityStatus != ConnectivityObserver.Status.Available){
+                        Log.d("statusInsert",connectivityStatus.name)
+                        toastMessage.value =  R.string.connectivity_lost
+                        showToast.value = true
+                    }else{
+                        if (mount.value.isNullOrEmpty()){
+                            toastMessage.value =  R.string.please_insert_the_ID_number
+                            showToast.value = true
+                        }else{
+                            writeOnTagViewModel.getUserById()
+                            coroutineScope.launch {
+                                writeOnTagViewModel.isLoading.collectLatest { isLoading ->
+                                   if(!isLoading){
+                                            showTagDialog.value = true
+                                            tag.collectLatest { tag ->
+                                                if (tag != null){
+                                                    val writeSucceed = writeOnTagViewModel.writeToTagByNFC(tag)
+                                                    showTagDialog.value = writeSucceed.not()
+                                                    showDoneDialog.value  = writeSucceed
+                                                    writeOnTagViewModel.setUserId(null)
+                                                }
+                                            }
+                                            tag.update { null }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+
+
+
+                },
+                modifier = Modifier
+                    .background(
+                        color = LightBlue,
+                        shape = RoundedCornerShape(10.sdp)
+                    )
+                    .padding(horizontal = 10.dp)
+                    .fillMaxWidth()
+                    .height(45.sdp)
+
+            ) {
+                Text(text = stringResource(R.string.confirm), style =  MaterialTheme.typography.body1, fontSize = 12.textSdp, color = Color.White)
+            }
+            Spacer(modifier = Modifier.height(30.sdp))
+
+
+        }
+
+        CircularProgressIndicator(
+            color = LightBlue,
+            modifier = Modifier.then(Modifier.size(if (writeOnTagViewModel.isLoading.value){60.sdp}else{0.sdp})),
+           strokeWidth = 4.sdp
+        )
+    }
+
 
 }
 

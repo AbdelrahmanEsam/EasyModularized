@@ -1,6 +1,5 @@
 package com.apptikar.easy.peresentation
 
-import android.nfc.Tag
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
