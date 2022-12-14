@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.apptikar.easy_read.presentation.ScanAndMoneyViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:context="com.apptikar.easy_read.presentation.money.MoneyFragment">
+
+            <TextView
+                android:id="@+id/wantedMoneyTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:textColor="#0C0C0C"
+                android:fontFamily="@font/messiribold"
+                android:textSize="@dimen/_20ssp"
+                android:text="@string/wanted_money"
+                app:layout_constraintEnd_toEndOf="@+id/backImageView"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backImageView" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/backImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_20sdp"
+                android:src="@drawable/ic_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textSize="@dimen/_12ssp"
+                android:textColor="#0C0C0C"
+                android:fontFamily="@font/regular"
+                android:text="@string/the_price"
+                app:layout_constraintEnd_toEndOf="@+id/wantedMoneyTextView"
+                app:layout_constraintStart_toStartOf="@+id/wantedMoneyTextView"
+                app:layout_constraintTop_toBottomOf="@+id/wantedMoneyTextView" />
+
+            <TextView
+                android:id="@+id/priceTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_20sdp"
+                android:textColor="#ACACAC"
+                android:textSize="@dimen/_12ssp"
+                android:text="@string/price"
+                app:layout_constraintEnd_toEndOf="@+id/textView"
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/numberInputLayout"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_9sdp"
+                android:paddingBottom="0dp"
+                app:boxBackgroundColor="#F5F5F5"
+                app:boxCornerRadiusTopEnd="@dimen/_8sdp"
+                app:boxCornerRadiusTopStart="@dimen/_8sdp"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="@+id/backImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/priceTextView">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:gravity="end"
+                    android:textAlignment="viewEnd"
+                    android:text="@={viewModel.cost}"
+                    android:textSize="@dimen/_10ssp"
+
+                    />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/confirmButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_50sdp"
+
+                android:fontFamily="@font/nunitoextrabold"
+                android:text="@string/confirm_text"
+                android:enabled="@{viewModel.loading ? false : true}"
+                android:textStyle="bold"
+                android:background="@drawable/background_primary"
+                android:textColor="#ffffff"
+                app:layout_constraintEnd_toEndOf="@+id/numberInputLayout"
+                app:layout_constraintStart_toStartOf="@+id/numberInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/numberInputLayout" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

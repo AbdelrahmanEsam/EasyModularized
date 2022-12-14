@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="insert_password">ادخل كلمة المرور</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="password">كلمة المرور</string>
+    <string name="insert_code">ادخل رقمك التعريفي</string>
+    <string name="code">الرقم التعريفي</string>
+    <string name="connectivity_lost">انت غير متصل بالانترنت</string>
+    <string name="welcome_back">مرحبا بعودتك</string>
+    <string name="logo">logo</string>
+
+</resources>

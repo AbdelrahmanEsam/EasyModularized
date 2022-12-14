@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="confirm_text">تأكيد</string>
+    <string name="wanted_money">المبلغ المطلوب</string>
+    <string name="the_price">من فضلك ادخل سعر الطلب</string>
+    <string name="price">السعر</string>
+</resources>

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Easy</string>
+    <string name="hello_again">مرحبا بعودتك</string>
+    <string name="induction_number">الرقم التعريفي</string>
+    <string name="enter_inducation_number">ادخل رقمك التعريفي</string>
+    <string name="password">كلمة المرور</string>
+    <string name="enter_pass">ادخل كلمة المرور</string>
+    <string name="login_text">تسجيل دخول</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="wanted_money">المبلغ المطلوب</string>
+    <string name="the_price">من فضلك ادخل سعر الطلب</string>
+    <string name="confirm_text">تأكيد</string>
+    <string name="Done">حسنا</string>
+    <string name="logo">logo</string>
+    <string name="done_successfully">تم إضافة سعر الطلب\n بنجاح</string>
+    <string name="price">السعر</string>
+    <string name="scan_text">قم بمسح \nالرمز المطلوب</string>
+    <string name="click_to_start">اضغط هنا للبدء</string>
+    <string name="camera_text">قم بتوجيه كاميرا الهاتف مباشراً نحو رمز الاستجابة\n السريع و الضغط علي زر الصوت في الجهاز</string>
+    <string name="read_card">قراءة الكارت</string>
+    <string name="read_card_description">قم بوضع الكارت امام الجهاز\n ليتمكن من قراءة البيانات</string>
+    <string name="please_connect_to_internet">"من فضلك تاكد من الاتصال بالانترنت اولا ثم اعد المحاولة"</string>
+    <string name="this_member_isnot_registered">هذا العضو غير موجود لدينا</string>
+    <string name="you_are_not_have_the_permission_to_sign_in">غير مسموح لك بتسجيل الدخول</string>
+    <string name="connectivity_lost">انت غير متصل بالانترنت</string>
+    <string name="connectivity_back">تم استعاده الاتصال بالانترنت</string>
+</resources>

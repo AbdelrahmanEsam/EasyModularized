@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint android:id="@+id/readCardTextView" />
+        <Constraint
+            android:layout_height="@dimen/_220sdp"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            android:layout_marginTop="@dimen/_80sdp"
+            app:layout_constraintHorizontal_bias="1.0"
+            android:layout_width="@dimen/_220sdp"
+            app:layout_constraintTop_toBottomOf="@+id/readCardTextView"
+            android:id="@+id/lightBlueCircleImage" />
+        <Constraint
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            app:layout_constraintTop_toBottomOf="@+id/lightBlueCircleImage"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            android:layout_marginStart="@dimen/_20sdp"
+            android:id="@+id/readCardDescriptionTextView" />
+        <Constraint
+            android:id="@+id/readCardDescriptionTextView"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/lightBlueCircleImage"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            android:layout_marginTop="@dimen/_60sdp" />
+        <Constraint
+            android:layout_height="@dimen/_75sdp"
+            app:layout_constraintTop_toTopOf="@+id/blueCircleImage"
+            android:layout_width="@dimen/_140sdp"
+            android:id="@+id/doneCardImage"
+            app:layout_constraintBottom_toBottomOf="@+id/blueCircleImage"
+            app:layout_constraintEnd_toEndOf="@+id/blueCircleImage"
+            app:layout_constraintStart_toStartOf="@+id/blueCircleImage"
+            app:layout_editor_absoluteY="368dp" />
+        <Constraint
+            android:id="@+id/doneCardImage"
+            android:elevation="5dp"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_75sdp"
+            android:visibility="invisible"
+            app:layout_constraintTop_toTopOf="@+id/blueCircleImage"
+            app:layout_constraintBottom_toBottomOf="@+id/blueCircleImage"
+            app:layout_editor_absoluteY="368dp"
+            app:layout_constraintEnd_toEndOf="@+id/blueCircleImage"
+            app:layout_constraintStart_toStartOf="@+id/blueCircleImage" />
+
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint android:id="@id/readCardTextView" />
+        <Constraint
+            android:id="@+id/blueCircleImage"
+            app:layout_constraintEnd_toEndOf="@+id/lightBlueCircleImage"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_180sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/lightBlueCircleImage"
+            app:layout_constraintTop_toTopOf="@+id/lightBlueCircleImage"
+            app:layout_constraintStart_toStartOf="@+id/lightBlueCircleImage" />
+        <Constraint
+            android:id="@+id/readCardDescriptionTextView"
+            app:layout_constraintEnd_toStartOf="@+id/guideline6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            app:layout_constraintTop_toBottomOf="@+id/lightBlueCircleImage"
+            android:layout_marginStart="@dimen/_20sdp"
+            app:layout_constraintStart_toStartOf="@+id/guideline7"
+            android:layout_marginTop="@dimen/_60sdp" />
+
+        <Constraint
+            android:id="@+id/mobileImage"
+            android:elevation="10dp"
+            app:layout_constraintEnd_toEndOf="@+id/lightBlueCircleImage"
+            android:layout_width="@dimen/_125sdp"
+            android:layout_height="@dimen/_185sdp"
+            app:layout_constraintTop_toTopOf="@+id/blueCircleImage"
+            app:layout_constraintStart_toStartOf="@+id/lightBlueCircleImage"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/blueCircleImage" />
+
+        <Constraint
+            android:layout_height="@dimen/_75sdp"
+            app:layout_constraintTop_toTopOf="@+id/blueCircleImage"
+            android:layout_width="@dimen/_140sdp"
+            android:id="@+id/doneCardImage"
+            app:layout_constraintBottom_toBottomOf="@+id/blueCircleImage"
+            app:layout_constraintEnd_toEndOf="@+id/blueCircleImage"
+            app:layout_constraintStart_toStartOf="@+id/blueCircleImage"
+            android:visibility="visible"
+            />
+
+
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="200"
+        app:motionInterpolator="easeIn">
+        <KeyFrameSet >
+            <KeyAttribute
+                app:motionTarget="@+id/mobileImage"
+                app:framePosition="50"
+                android:alpha="0.0"
+                />
+
+            <KeyAttribute
+                app:motionTarget="@+id/doneCardImage"
+                app:framePosition="50"
+                android:alpha="1"
+                />
+
+            <KeyAttribute
+                app:motionTarget="@+id/doneCardImage"
+                app:framePosition="50"
+                android:translationY="4dp"
+                />
+
+            <KeyAttribute
+                app:motionTarget="@+id/doneCardImage"
+                app:framePosition="70"
+                android:translationY="-4dp"
+                />
+
+
+            <KeyAttribute
+                app:motionTarget="@+id/doneCardImage"
+                app:framePosition="90"
+                android:translationY="4dp"
+                />
+
+        </KeyFrameSet>
+    </Transition>
+</MotionScene>

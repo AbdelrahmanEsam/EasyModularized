@@ -1,0 +1,13 @@
+<resources>
+    <string name="read_card">قراءة الكارت</string>
+    <string name="read_card_description">قم بوضع الكارت امام الجهاز\n ليتمكن من قراءة البيانات</string>
+    <string name="please_connect_to_internet">"من فضلك تاكد من الاتصال بالانترنت اولا ثم اعد المحاولة"</string>
+    <string name="this_member_is_not_registered">هذا العضو غير موجود لدينا</string>
+    <string name="wanted_money">المبلغ المطلوب</string>
+    <string name="the_price">من فضلك ادخل سعر الطلب</string>
+    <string name="price">السعر</string>
+    <string name="confirm_text">تأكيد</string>
+    <string name="done_successfully">تم إضافة سعر الطلب\n بنجاح</string>
+    <string name="done">حسنا</string>
+    <string name="logout">logout</string>
+</resources>
