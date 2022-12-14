@@ -1,0 +1,103 @@
+plugins {
+    id ("com.android.application")
+    id ("org.jetbrains.kotlin.android")
+    id ("kotlin-kapt")
+    id ("dagger.hilt.android.plugin")
+    id ("com.google.devtools.ksp") version "1.7.10-1.0.6"
+    id ("kotlin-parcelize")
+}
+
+android {
+    compileSdk = 33
+
+    defaultConfig {
+        applicationId ="com.apptikar.easy_write"
+        minSdk =24
+        targetSdk =33
+        versionCode =1
+        versionName ="1.0"
+
+        testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary  = true
+        }
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    buildFeatures {
+        compose =  true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion  = "1.3.0-rc01"
+    }
+    packagingOptions {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    namespace  = "com.apptikar.easy_write"
+}
+
+dependencies {
+
+    implementation(libs.androidx.core.kotlin)
+    implementation (libs.androidx.compose.ui)
+    implementation (libs.androidx.compose.material)
+    implementation (libs.androidx.compose.tooling)
+    implementation (libs.androidx.lifecycle.runtime)
+    implementation (libs.androidx.activity.compose)
+
+    testImplementation (libs.junit)
+    androidTestImplementation (libs.androidx.test.ext)
+    androidTestImplementation (libs.androidx.test.espresso)
+    androidTestImplementation (libs.androidx.compose.ui.test)
+    debugImplementation (libs.androidx.compose.tooling)
+    debugImplementation (libs.androidx.compose.ui.test.manifest)
+
+
+    // hilt
+    implementation (libs.hilt.android)
+    kapt (libs.hilt.compiler)
+    kapt (libs.androidx.hilt.compiler)
+    implementation (libs.androidx.hilt.navigation)
+
+
+    //sdp
+    implementation (libs.sdp)
+
+    // windowManger
+    implementation(libs.window.manager)
+
+    // navigationCompose
+    implementation(libs.androidx.navigation.compose)
+
+
+
+
+    //retrofit
+    implementation (libs.retrofit.core)
+    implementation (libs.retrofit.gson.converter)
+    implementation (libs.retrofit.intercepter)
+
+    //dataStore
+    implementation (libs.androidx.datastore.pref)
+    implementation (libs.androidx.datastore.core)
+
+
+
+    implementation(project(":common"))
+    implementation(project(":feature:loginAdmin"))
+    implementation(project(":feature:writeOnTag"))
+}

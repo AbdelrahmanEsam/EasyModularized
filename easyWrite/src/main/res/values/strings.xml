@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Easy Writer</string>
+    <string name="mount">الرقم التعريفي</string>
+    <string name="back">back</string>
+    <string name="insert_password">ادخل كلمة المرور</string>
+    <string name="login">تسجيل دخول</string>
+    <string name="password">كلمة المرور</string>
+    <string name="insert_code">ادخل رقمك التعريفي</string>
+    <string name="code">الرقم التعريفي</string>
+    <string name="welcome_back">مرحبا بعودتك</string>
+    <string name="logo">logo</string>
+    <string name="this_device_isn_not_supported">هذا الجهاز لا يدعم ال NFC او انه مغلق</string>
+    <string name="you_are_not_have_the_permission_to_sign_in">غير مسموح لك بتسجيل الدخول</string>
+    <string name="connectivity_lost">انت غير متصل بالانترنت</string>
+    <string name="connectivity_back">تم استعاده الاتصال بالانترنت</string>
+</resources>

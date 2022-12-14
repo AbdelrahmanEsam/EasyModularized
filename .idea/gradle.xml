@@ -11,7 +11,21 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
+            <option value="$PROJECT_DIR$/easyRead" />
+            <option value="$PROJECT_DIR$/easyWrite" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/login" />
+            <option value="$PROJECT_DIR$/feature/login/data" />
+            <option value="$PROJECT_DIR$/feature/loginAdmin" />
+            <option value="$PROJECT_DIR$/feature/loginAdmin/data" />
+            <option value="$PROJECT_DIR$/feature/loginAdmin/domain" />
+            <option value="$PROJECT_DIR$/feature/loginAdmin/presentation" />
+            <option value="$PROJECT_DIR$/feature/scan" />
+            <option value="$PROJECT_DIR$/feature/scan/data" />
+            <option value="$PROJECT_DIR$/feature/scan/domain" />
+            <option value="$PROJECT_DIR$/feature/scan/presentation" />
+            <option value="$PROJECT_DIR$/feature/writeOnTag" />
           </set>
         </option>
       </GradleProjectSettings>
