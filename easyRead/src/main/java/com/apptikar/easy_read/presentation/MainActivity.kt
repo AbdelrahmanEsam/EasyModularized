@@ -10,14 +10,12 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
 import com.apptikar.common.utils.ConnectivityObserver
 import com.apptikar.common.utils.rememberWindowSizeDp
 import com.apptikar.easy.R
-import com.apptikar.easy.databinding.ActivityMainBinding
 import com.apptikar.scan.presentation.ScanAndMoneyViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.SharingStarted
@@ -40,7 +38,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: ScanAndMoneyViewModel by viewModels()
     var connectivityStatus: ConnectivityObserver.Status =  ConnectivityObserver.Status.Available
 
-    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

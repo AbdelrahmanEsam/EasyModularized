@@ -1,7 +1,8 @@
 [versions]
 androidxCore = "1.9.0"
 androidGradlePlugin = "7.3.1"
-compose = "1.3.0-beta01"
+compose = "1.3.2"
+material = "1.3.1"
 hilt = "2.42"
 daggerHiltCompiler = "2.43.2"
 hiltCompiler = "1.0.0"
@@ -26,15 +27,19 @@ espresso = "3.4.0"
 constraintlayout = "2.1.4"
 lifecycle = "2.5.1"
 extensions = "2.2.0"
+constraintlayoutCompose = "1.0.1"
+
+
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCore" }
 androidx-core-kotlin= { group =  "androidx.core",name = "core-ktx" , version.ref = "kotlin"}
 androidx-compose-UI = {group = "androidx.compose.ui" ,name = "ui" , version.ref = "compose"}
-androidx-compose-material = {group = "androidx.compose.material",name = "material" ,  version.ref = "compose"}
+androidx-compose-material = {group = "androidx.compose.material",name = "material" ,  version.ref = "material"}
 androidx-compose-tooling= {group = "androidx.compose.ui",name = "ui-tooling-preview" , version.ref = "compose"}
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+androidx-constraintlayout-compose = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-lifecycle-runtime= {group = "androidx.lifecycle",name = "lifecycle-runtime-ktx" , version.ref = "compose"}
 androidx-lifecycle-common= {group = "androidx.lifecycle",name = "lifecycle-common-java8" , version.ref = "lifecycle"}
 androidx-lifecycle-extensions= {group = "androidx.lifecycle",name = "lifecycle-extensions" , version.ref = "extensions"}
@@ -53,7 +58,6 @@ androidx-test-ext = {group = "androidx.test.ext",name = "junit" ,version.ref = "
 androidx-test-espresso = {group = "androidx.test.espresso",name = "espresso-core" ,version.ref = "espresso"}
 androidx-hilt-compiler = {group = "androidx.hilt",name = "hilt-compiler" ,version.ref = "hiltCompiler" }
 androidx-hilt-navigation = {group = "androidx.hilt",name = "hilt-navigation-compose" , version.ref = "hiltNavigation" }
-dagger-hilt-compiler = {group = "com.google.dagger",name ="hilt-compiler" ,version.ref = "daggerHiltCompiler" }
 hilt-android = {group = "com.google.dagger",name ="hilt-android" ,version.ref = "daggerHiltCompiler" }
 hilt-compiler = {group = "com.google.dagger",name = "hilt-compiler" ,version.ref = "daggerHiltCompiler" }
 junit = {group = "junit",name = "junit" , version.ref = "junit" }
@@ -66,7 +70,9 @@ retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit" ,  version
 retrofit-gson-converter = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofitCore" }
 retrofit-intercepter = { group = "com.squareup.okhttp3",name = "logging-interceptor" ,  version.ref = "retrofitIntercepter" }
 
-
+# Dependencies of the included build-logic
+android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinJVM" }
 
 
 

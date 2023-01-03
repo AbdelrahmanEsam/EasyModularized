@@ -1,7 +1,6 @@
 package com.apptikar.login.di
 
-
-import com.apptikar.domain.repository.LoginRepo
+import com.apptikar.login.admin.domain.repository.LoginRepo
 import com.apptikar.login.data.repository.LoginRepoImp
 import dagger.Binds
 import dagger.Module

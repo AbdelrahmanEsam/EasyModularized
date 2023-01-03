@@ -1,70 +1,22 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    id("easy.android.feature")
+    id("easy.android.library.compose")
 }
 
 android {
-    namespace = "com.apptikar.login"
-    compileSdk = 33
-
-    defaultConfig {
-        minSdk = 24
-        targetSdk = 33
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildFeatures {
-        compose =  true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion  = "1.3.0-rc01"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+    namespace = "com.apptikar.loginAdmin"
 }
 
 dependencies {
 
     implementation(libs.androidx.core.kotlin)
-    implementation (libs.androidx.compose.ui)
-    implementation (libs.androidx.compose.material)
-    implementation (libs.androidx.compose.tooling)
     implementation (libs.androidx.lifecycle.runtime)
-    implementation (libs.androidx.activity.compose)
+
 
     testImplementation (libs.junit)
-    androidTestImplementation (libs.androidx.test.ext)
-    androidTestImplementation (libs.androidx.test.espresso)
-    androidTestImplementation (libs.androidx.compose.ui.test)
-    debugImplementation (libs.androidx.compose.tooling)
-    debugImplementation (libs.androidx.compose.ui.test.manifest)
 
 
-    // hilt
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
-    kapt (libs.androidx.hilt.compiler)
+
     implementation (libs.androidx.hilt.navigation)
 
     //retrofit
@@ -76,4 +28,5 @@ dependencies {
     implementation(project(":common"))
     api(project(":feature:loginAdmin:presentation"))
     implementation(project(":feature:login:data"))
+    implementation(project(":feature:loginAdmin:domain"))
 }

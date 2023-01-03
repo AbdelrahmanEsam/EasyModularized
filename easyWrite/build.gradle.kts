@@ -1,19 +1,16 @@
 plugins {
-    id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
+    id ("easy.android.application")
+    id("easy.android.application.compose")
+    id("easy.android.hilt")
     id ("com.google.devtools.ksp") version "1.7.10-1.0.6"
     id ("kotlin-parcelize")
 }
 
 android {
-    compileSdk = 33
 
+    namespace  = "com.apptikar.easy_write"
     defaultConfig {
         applicationId ="com.apptikar.easy_write"
-        minSdk =24
-        targetSdk =33
         versionCode =1
         versionName ="1.0"
 
@@ -29,25 +26,12 @@ android {
             proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
-        compose =  true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = "1.3.0-rc01"
-    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    namespace  = "com.apptikar.easy_write"
+
 }
 
 dependencies {

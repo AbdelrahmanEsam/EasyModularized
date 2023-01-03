@@ -12,25 +12,20 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Devices
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.apptikar.common.Destinations
 import com.apptikar.common.utils.readToken
-import com.apptikar.common.utils.saveToken
 import com.apptikar.common.utils.sdp
 import com.apptikar.scan.presentation.R
 import com.apptikar.scan.presentation.ScanAndMoneyViewModel
@@ -48,6 +43,7 @@ fun Scan(
     val navigationState by scanAndMoneyViewModel.navigateCheckUser.collectAsState()
     val isNetworkConnected by scanAndMoneyViewModel.isNetworkConnected.collectAsState()
     val codeFromNFC by scanAndMoneyViewModel.nfcContent.collectAsState()
+    val loading by scanAndMoneyViewModel.loading.collectAsState()
     var contentFromNFC:String? = null
     var blueCircleState by rememberSaveable { mutableStateOf(CircleState.SmallCircle) }
     var mobileVisibility by rememberSaveable { mutableStateOf(Visibility.Visible) }
@@ -102,7 +98,7 @@ fun Scan(
     if (contentFromNFC != null) {
         LaunchedEffect(key1 = isNetworkConnected) {
             this.launch(Dispatchers.Main) {
-                if (!scanAndMoneyViewModel.loading.get()) {
+                if (!loading!!) {
                     val token = context.readToken("tokenKey")
                     scanAndMoneyViewModel.checkUser(token!!, contentFromNFC!!)
                 }

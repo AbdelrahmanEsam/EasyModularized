@@ -4,7 +4,6 @@ import android.content.Intent
 import android.nfc.NdefMessage
 import android.nfc.NfcAdapter
 import android.util.Log
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.*
 import com.apptikar.common.utils.ConnectivityObserver
 import com.apptikar.common.utils.Event
@@ -26,7 +25,9 @@ class ScanAndMoneyViewModel @Inject constructor(private val repository: MakeInvo
 
     private val _code = MutableStateFlow<String?>(null)
     val code = _code.asStateFlow()
-    val loading = ObservableBoolean()
+
+   private val _loading = MutableStateFlow<Boolean?>(false)
+    val loading = _loading.asStateFlow()
 
 
     private val _navigateMakeInvoice = MutableStateFlow<MakeInvoiceModel?>(null)
@@ -57,10 +58,10 @@ class ScanAndMoneyViewModel @Inject constructor(private val repository: MakeInvo
 
     fun makeInvoiceRequest(token:String,code: String?){
         var response :Response<MakeInvoiceModel>
-        loading.set(true)
+        _loading.update{true}
         viewModelScope.launch(Dispatchers.IO){
              response =  repository.makeInvoice(token, code.toString(), cost = cost.value.toString())
-            loading.set(false)
+            _loading.update{false}
             _navigateMakeInvoice.update {  response.body()}
             Log.d("mm", response.body().toString() +" "+_code.value.toString())
         }
@@ -69,12 +70,12 @@ class ScanAndMoneyViewModel @Inject constructor(private val repository: MakeInvo
     fun checkUser(token :String , code :String){
         var response : Response<CheckModel>
         Log.w("mm", "request pre send")
-        loading.set(true);
+        _loading.update{true}
         viewModelScope.launch(Dispatchers.IO) {
             Log.w("mm", "request send wating")
             response = repository.checkUser(token , code)
             response.body()?.code  = code
-            loading.set(false)
+            _loading.update{false}
             Log.e("checkUserResponse",response.body().toString())
             _navigateCheckUser.update{Event(response.body()) as Event<CheckModel>?}
             Log.d("mm", response.body().toString() +" "+_code.value.toString())

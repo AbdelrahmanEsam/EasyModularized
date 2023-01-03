@@ -1,35 +1,17 @@
 plugins {
-    id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
-    id ("dagger.hilt.android.plugin")
-    id ("androidx.navigation.safeargs")
+    id ("easy.android.application")
+    id("easy.android.application.compose")
+    id("easy.android.hilt")
 }
 
 android {
-    compileSdk = 33
 
     defaultConfig {
         applicationId =  "com.apptikar.easy"
-        minSdk = 24
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
-
-
-    buildFeatures {
-        compose =  true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion  = "1.3.0-rc01"
     }
 
 
@@ -39,13 +21,8 @@ android {
             proguardFiles (getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
+
+
 
     packagingOptions {
         resources {

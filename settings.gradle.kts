@@ -6,6 +6,7 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
+    includeBuild("build-logic")
     versionCatalogs {
         create("myLibs") {
             from(files("/gradle/libs.versions.toml"))
@@ -56,3 +57,8 @@ include(":feature:scan")
 include(":feature:scan:presentation")
 include(":feature:scan:domain")
 include(":feature:scan:data")
+
+
+
+
+

@@ -1,6 +1,5 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("easy.android.library")
 }
 
 android {
@@ -20,7 +19,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion  = "1.3.0-rc01"
+        kotlinCompilerExtensionVersion  = "1.3.2"
     }
 
     buildTypes {

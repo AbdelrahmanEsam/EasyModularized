@@ -4,7 +4,7 @@ import com.apptikar.scan.data.dto.MakeInvoiceDto
 import retrofit2.Response
 import retrofit2.http.*
 
-interface RetrofitApiR {
+interface RetrofitApiScan {
 
 //    @FormUrlEncoded
 //    @POST("api/Auth_general/login")

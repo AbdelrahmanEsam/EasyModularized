@@ -41,7 +41,7 @@ fun EasyNavGraph(
             navigateTo = "sahl://Scan"
         )
 
-        scanScreen(navController,)
+        scanScreen(navController)
         composable(Destinations.Splash){
             Splash(modifier = Modifier
                 .fillMaxSize()
