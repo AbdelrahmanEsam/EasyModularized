@@ -1,6 +1,6 @@
 package com.apptikar.login.data.dto
 
-import com.apptikar.login.admin.domain.models.DataX
+import com.apptikar.login.domain.models.DataX
 
 data class LoginPojo(
     val status: Int,

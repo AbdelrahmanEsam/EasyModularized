@@ -14,7 +14,7 @@ import com.apptikar.common.Destinations
 import com.apptikar.common.utils.ConnectivityObserver
 import com.apptikar.common.utils.ScreenClassifier
 import com.apptikar.easy_write.peresentation.ui.splash.Splash
-import com.apptikar.login.admin.navigation.loginScreen
+import com.apptikar.navigation.loginScreen
 import com.apptikar.writeontag.navigation.writeOnTagScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 

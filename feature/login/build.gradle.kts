@@ -9,12 +9,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.kotlin)
-    implementation (libs.androidx.compose.ui)
-    implementation (libs.androidx.compose.material)
-    implementation (libs.androidx.compose.tooling)
-    implementation (libs.androidx.lifecycle.runtime)
-    implementation (libs.androidx.activity.compose)
+
 
     testImplementation (libs.junit)
     androidTestImplementation (libs.androidx.test.ext)
@@ -24,15 +19,12 @@ dependencies {
     debugImplementation (libs.androidx.compose.ui.test.manifest)
 
 
-    implementation (libs.androidx.hilt.navigation)
-
-    //retrofit
-    implementation (libs.retrofit.core)
-    implementation (libs.retrofit.gson.converter)
-    implementation (libs.retrofit.intercepter)
 
 
-    api(project(":feature:loginAdmin:presentation"))
-    api(project(":feature:loginAdmin:domain"))
+
+
+    implementation(project(":common"))
+    implementation(project(":feature:login:presentation"))
+    api(project(":feature:login:domain"))
     api(project(":feature:login:data"))
 }

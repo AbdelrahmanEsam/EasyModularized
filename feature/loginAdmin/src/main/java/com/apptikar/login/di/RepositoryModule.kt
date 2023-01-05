@@ -1,7 +1,6 @@
 package com.apptikar.login.di
 
 import com.apptikar.login.admin.domain.repository.LoginRepo
-import com.apptikar.login.data.repository.LoginRepoImp
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -14,8 +13,8 @@ abstract class RepositoryModule {
 
 
 
-     @Binds
-     abstract fun loginRepoProvider(repo: LoginRepoImp): LoginRepo
+//     @Binds
+//     abstract fun loginRepoProvider(repo: LoginRepoImp): LoginRepo
 
 
 

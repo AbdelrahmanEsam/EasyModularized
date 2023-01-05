@@ -19,5 +19,5 @@ dependencies {
     implementation (libs.retrofit.gson.converter)
     implementation (libs.retrofit.intercepter)
 
-    implementation(project(":feature:loginAdmin:domain"))
+    implementation(project(":feature:login:domain"))
 }

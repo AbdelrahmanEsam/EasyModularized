@@ -1,6 +1,5 @@
 package com.apptikar.easy_read.presentation.navigation
 
-import android.nfc.Tag
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
@@ -14,9 +13,8 @@ import com.apptikar.common.Destinations
 import com.apptikar.common.utils.ConnectivityObserver
 import com.apptikar.common.utils.ScreenClassifier
 import com.apptikar.easy_read.presentation.Splash
-import com.apptikar.login.admin.navigation.loginScreen
-import com.apptikar.scan.presentation.navigation.scanScreen
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.apptikar.login.navigation.loginScreen
+import com.apptikar.navigation.scanScreen
 
 @Composable
 fun EasyNavGraph(

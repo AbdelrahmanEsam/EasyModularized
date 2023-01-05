@@ -44,6 +44,8 @@ include(":feature:writeOnTag")
 //Login
 include(":feature:login")
 include(":feature:login:data")
+include(":feature:login:domain")
+include(":feature:login:presentation")
 
 //LoginAdmin
 include(":feature:loginAdmin")

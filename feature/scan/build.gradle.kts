@@ -1,5 +1,6 @@
 plugins {
 id("easy.android.feature")
+id("easy.android.library.compose")
 }
 
 android {
@@ -11,7 +12,7 @@ dependencies {
 
 
 
-    implementation(libs.androidx.core.kotlin)
+
 
     testImplementation (libs.junit)
     androidTestImplementation (libs.androidx.test.ext)
@@ -24,7 +25,7 @@ dependencies {
     implementation (libs.androidx.navigation.fragment)
     implementation (libs.androidx.navigation.ui)
 
-    implementation (libs.androidx.hilt.navigation)
+
 
     implementation(project(":common"))
     api(project(":feature:scan:presentation"))

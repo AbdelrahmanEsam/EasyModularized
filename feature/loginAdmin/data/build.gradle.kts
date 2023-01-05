@@ -9,9 +9,8 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.kotlin)
-    implementation (libs.androidx.lifecycle.runtime)
-    implementation (libs.androidx.activity.compose)
+
+
     testImplementation (libs.junit)
 
 

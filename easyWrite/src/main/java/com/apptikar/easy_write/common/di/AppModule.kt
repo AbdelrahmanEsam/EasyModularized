@@ -3,11 +3,14 @@ package com.apptikar.easy_write.common.di
 import android.content.Context
 import com.apptikar.common.utils.ConnectivityObserver
 import com.apptikar.common.utils.NetworkConnectivityObserver
+import com.apptikar.login.admin.data.remote.RetrofitApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 
@@ -15,6 +18,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule
 {
+
+    @Singleton
+    @Provides
+    fun retrofitBuilder(): RetrofitApi = Retrofit.Builder().baseUrl("http://sahel.ahmeds.club/").addConverterFactory(
+        GsonConverterFactory.create()).build()
+        .create(RetrofitApi::class.java)
 
 
 

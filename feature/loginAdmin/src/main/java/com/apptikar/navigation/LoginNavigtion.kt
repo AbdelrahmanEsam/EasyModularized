@@ -1,4 +1,4 @@
-package com.apptikar.scan.presentation.navigation
+package com.apptikar.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,23 +10,23 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.apptikar.common.Destinations
-import com.apptikar.scan.presentation.done.DoneDialog
-import com.apptikar.scan.presentation.money.Money
-import com.apptikar.scan.presentation.scan.Scan
+import com.apptikar.common.utils.ConnectivityObserver
+import com.apptikar.login.admin.presentation.Login
 
 
-
-fun NavGraphBuilder.scanScreen(
+fun NavGraphBuilder.loginScreen(
     navController: NavHostController,
+    connectivityStatus:ConnectivityObserver.Status,
+    navigateTo:String
 ) {
     navigation(
-        route = Destinations.ScanAndMoneyGraph,
-        startDestination = Destinations.Scan
+        route = Destinations.LoginGraph,
+        startDestination = Destinations.login
     ){
-        composable(route = Destinations.Scan,
-            deepLinks = listOf(navDeepLink { uriPattern = "sahl://Scan" })
+        composable(route = Destinations.login,
+            deepLinks = listOf(navDeepLink { uriPattern = "sahl://Login" })
         ) {
-            Scan(
+            Login(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(Color.White)
@@ -34,21 +34,10 @@ fun NavGraphBuilder.scanScreen(
                         rememberScrollState()
                     ),
                 navController = navController,
+                connectivityStatus = connectivityStatus,
+                navigateTo = navigateTo
             )
         }
     }
 
-    composable(route = Destinations.Money,
-    ) {
-        Money(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-                .verticalScroll(
-                    rememberScrollState()
-                ),
-            navController = navController,
-        )
-    }
 }
-

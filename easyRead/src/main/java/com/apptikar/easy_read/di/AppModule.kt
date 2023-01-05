@@ -36,7 +36,4 @@ object AppModule
     @Provides
     fun connectivityObserver(@ApplicationContext context: Context) : ConnectivityObserver = NetworkConnectivityObserver(context = context)
 
-
-
-
 }

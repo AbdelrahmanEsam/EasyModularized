@@ -10,7 +10,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.kotlin)
+
 
     testImplementation (libs.junit)
 

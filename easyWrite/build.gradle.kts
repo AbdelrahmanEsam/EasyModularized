@@ -51,18 +51,7 @@ dependencies {
     debugImplementation (libs.androidx.compose.ui.test.manifest)
 
 
-    // hilt
-    implementation (libs.hilt.android)
-    kapt (libs.hilt.compiler)
-    kapt (libs.androidx.hilt.compiler)
     implementation (libs.androidx.hilt.navigation)
-
-
-    //sdp
-    implementation (libs.sdp)
-
-    // windowManger
-    implementation(libs.window.manager)
 
     // navigationCompose
     implementation(libs.androidx.navigation.compose)

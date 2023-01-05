@@ -9,7 +9,7 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.kotlin)
+
 
     testImplementation (libs.junit)
 
@@ -19,6 +19,7 @@ dependencies {
     implementation (libs.retrofit.core)
     implementation (libs.retrofit.gson.converter)
     implementation (libs.retrofit.intercepter)
+
     implementation(project(":feature:scan:domain"))
 
 }

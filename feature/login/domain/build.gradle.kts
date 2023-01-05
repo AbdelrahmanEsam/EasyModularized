@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.apptikar.domain"
+    namespace = "com.apptikar.login.domain"
     compileSdk = 33
 
     defaultConfig {
