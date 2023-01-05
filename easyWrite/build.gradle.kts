@@ -53,11 +53,6 @@ dependencies {
 
     implementation (libs.androidx.hilt.navigation)
 
-    // navigationCompose
-    implementation(libs.androidx.navigation.compose)
-
-
-
 
     //retrofit
     implementation (libs.retrofit.core)

@@ -19,6 +19,8 @@ dependencies {
     //lottie
     implementation (libs.lottie.compose)
 
+    implementation (libs.retrofit.core)
+
     implementation(project(":common"))
     implementation(project(":feature:scan:domain"))
 }

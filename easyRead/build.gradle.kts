@@ -42,6 +42,10 @@ dependencies {
 //    implementation files('libs/sunmiscan.jar')
 
 
+
+    implementation (libs.androidx.activity.compose)
+
+
     implementation (libs.androidx.constraintlayout)
     implementation(libs.androidx.core.kotlin)
     implementation (libs.androidx.lifecycle.runtime)
@@ -68,7 +72,10 @@ dependencies {
     implementation (libs.lottie)
 
 
-
+    //retrofit
+    implementation (libs.retrofit.core)
+    implementation (libs.retrofit.gson.converter)
+    implementation (libs.retrofit.intercepter)
 
     //dataStore
     implementation (libs.androidx.datastore.pref)

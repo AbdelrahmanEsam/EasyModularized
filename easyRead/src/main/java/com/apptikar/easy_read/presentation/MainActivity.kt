@@ -6,10 +6,9 @@ import android.nfc.NfcAdapter
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import androidx.window.layout.WindowInfoTracker
 import androidx.window.layout.WindowLayoutInfo
@@ -26,7 +25,7 @@ import javax.inject.Inject
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
     private var nfcAdapter : NfcAdapter? = null
 
     @Inject
@@ -62,8 +61,6 @@ class MainActivity : AppCompatActivity() {
             )
         }
        initNfc()
-
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun connectivityObserver(connectivityObserver: ConnectivityObserver) {
